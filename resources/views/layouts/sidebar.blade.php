@@ -53,7 +53,13 @@ if ($role_assign) {
                                     <li><a href="{{route('program.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
-
+                            
+                            <li class="dropdown"><a href="#"><i class="icon-options"></i>Services</a>
+                                <ul class="sub-menu">
+                                    <li><a href="{{route('services.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    <li><a href="{{route('services.index')}}"><i class="icon-energy"></i> View</a></li>
+                                </ul>
+                            </li>
 
                             {{--
                             <li class="dropdown"><a href="#"><i class="icon-options"></i>Category</a>
@@ -80,7 +86,12 @@ if ($role_assign) {
                             <li><a href="{{route('donation_view')}}"><i class="icon-energy"></i> Donations</a></li>
                         </ul>
                     </li>
-
+                    <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Tools</a>
+                        <ul>
+                            <li><a href="{{route('website.setting')}}"><i class="icon-options"></i>Settings</a> 
+                            </li> 
+                        </ul>
+                    </li>
                     {{--
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Tools</a>
                         <ul>

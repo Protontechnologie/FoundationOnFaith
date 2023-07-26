@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\attributes;
+use App\Models\Settings;
 use Illuminate\Support\Str;
 use Session;
 
@@ -226,6 +227,12 @@ class HomeController extends Controller
                  return redirect()->back()->with('error', 'File not found, please update your Education Document');
             }
         }
+    }
+
+    public function website_setting(){
+        $setting = Settings::find(1);
+        $title = "Website Settings | ".env("APP_NAME");
+        return view('profile.settings')->with(compact('setting' , 'title'));
     }
 
 }

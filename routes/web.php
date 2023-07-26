@@ -5,6 +5,8 @@ use App\Http\Controllers\IndexController;
 
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ServiceController;
+
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DesignationController;
@@ -13,9 +15,6 @@ use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\GenericController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\PayrollController;
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +62,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('dashboard/contact-view', [InquiryController::class , 'contact_view'])->name('contact_view');
     Route::get('dashboard/sponsor-view', [InquiryController::class , 'sponsor_view'])->name('sponsor_view');
     Route::get('dashboard/donation-view', [InquiryController::class , 'donation_view'])->name('donation_view');
+    Route::get('website/settings', [HomeController::class , 'website_setting'])->name('website.setting');
     
     
     Route::post('/user-info-update', [HomeController::class, 'user_infoupdate'])->name('user_infoupdate');
@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::resource('team', TeamController::class);
     Route::resource('program', ProgramController::class);
-
+    Route::resource('services', ServiceController::class);
     
     Route::resource('departments', DepartmentController::class);
     Route::resource('designations', DesignationController::class);

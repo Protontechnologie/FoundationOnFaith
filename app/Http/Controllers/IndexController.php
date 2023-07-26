@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\Programs;
+use App\Models\Services;
 
 
 class IndexController extends Controller
@@ -11,7 +12,8 @@ class IndexController extends Controller
     {
         $title = "Home | ".env('APP_NAME');
         $description = "";
-        return view('web.index')->with(compact('title' , 'description'));
+        $services = Services::where("is_active" , 1)->where("is_deleted" , 0)->get();
+        return view('web.index')->with(compact('title' , 'description','services'));
     }
 
     public function about()
