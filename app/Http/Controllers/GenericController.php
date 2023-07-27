@@ -40,14 +40,16 @@ class GenericController extends Controller
     public function roles()
     {
         $user = Auth::user();
-        if ($user->role_id != 1) {
-            return redirect()->back()->with('error', "No Link found");
-        }
-        $att_tag = attributes::where('is_active' ,1)->select('attribute')->distinct()->get();
-        $attributes = attributes::where('is_active' ,1)->get();
-        $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
+        if ($user->role_id == 1 || Helper::can_view('roles')) {
+            $att_tag = attributes::where('is_active' ,1)->select('attribute')->distinct()->get();
+            $attributes = attributes::where('is_active' ,1)->get();
+            $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
         
-        return view('roles/roles')->with(compact('attributes','att_tag','role_assign'));
+            return view('roles/roles')->with(compact('attributes','att_tag','role_assign'));
+        }else{
+            return view('error.permission');
+        }
+        
     }
     
     public function generic_submit(RequestAttributes $request)

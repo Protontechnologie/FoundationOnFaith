@@ -75,6 +75,17 @@
   		toastr.success("{{ session('message') }}");
   @endif
 
+  @if(Session::has('success'))
+  toastr.options =
+  {
+  	"closeButton" : true,
+  	"progressBar" : true,
+  	"debug": false,
+  	"positionClass": "toast-bottom-right",
+  }
+  		toastr.success("{{ session('success') }}");
+  @endif
+
   @if(Session::has('error'))
   toastr.options =
   {

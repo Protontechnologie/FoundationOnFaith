@@ -70,10 +70,33 @@ class Helper
         return $temp;
     }
 
+
     public static function can_edit($slug='')
     {
         $user = Auth::user();
-        return $user;
+        $temp = false;
+        $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
+        $verify = unserialize($role_assign->assignee);
+        foreach ($verify as $key => $value) {
+            if ($value == $slug."_3") {
+                $temp = true;
+            }
+        }
+        return $temp;
+    }
+
+    public static function can_delete($slug='')
+    {
+        $user = Auth::user();
+        $temp = false;
+        $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
+        $verify = unserialize($role_assign->assignee);
+        foreach ($verify as $key => $value) {
+            if ($value == $slug."_4") {
+                $temp = true;
+            }
+        }
+        return $temp;
     }
 
 }

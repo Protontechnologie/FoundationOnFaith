@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jul 25, 2023 at 09:48 PM
--- Server version: 10.5.20-MariaDB
--- PHP Version: 8.1.16
+-- Host: 127.0.0.1
+-- Generation Time: Jul 27, 2023 at 02:09 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `websites_faith`
+-- Database: `faith`
 --
 
 -- --------------------------------------------------------
@@ -45,20 +45,21 @@ CREATE TABLE `attributes` (
 --
 
 INSERT INTO `attributes` (`id`, `attribute`, `name`, `role`, `color`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'roles', 'CEO', 'Super Admin', '#00ffe5', 1, 0, '2021-05-12 00:45:00', '2021-05-12 00:56:40', NULL),
-(2, 'roles', 'COO', 'Admin', '#0084ff', 1, 0, '2021-05-12 00:45:13', '2021-05-12 00:45:33', NULL),
-(3, 'roles', 'Manager', 'Manager', '#b3ff00', 1, 0, '2021-05-12 00:46:30', '2021-05-12 00:46:30', NULL),
+(1, 'roles', 'Super Admin', 'Super Admin', '#00ffe5', 1, 0, '2021-05-12 00:45:00', '2023-07-26 00:47:54', NULL),
+(2, 'roles', 'Admin', 'Admin', '#0084ff', 1, 0, '2021-05-12 00:45:13', '2023-07-26 00:47:58', NULL),
+(3, 'roles', 'Client', 'Client', '#b3ff00', 1, 0, '2021-05-12 00:46:30', '2023-07-26 00:48:52', NULL),
 (4, 'roles', 'Employee', 'Employee', '#ff5c33', 1, 0, '2021-05-12 00:46:51', '2021-05-12 00:46:51', NULL),
-(5, 'departments', 'Custom Development', '', '#007a6e', 1, 0, '2021-05-12 00:47:25', '2021-05-12 00:47:25', NULL),
-(6, 'departments', 'WordPress Development', '', '#3fc624', 1, 0, '2021-05-12 00:47:48', '2021-05-12 00:47:48', NULL),
-(7, 'departments', 'Logo Design', '', '#7d248f', 1, 0, '2021-05-12 00:48:14', '2021-05-12 00:48:14', NULL),
-(8, 'departments', 'Mock Design', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2021-05-12 00:48:34', NULL),
-(9, 'designations', 'Executive', '', '#a7f4ec', 1, 0, '2021-05-12 00:49:08', '2021-05-12 00:49:08', NULL),
-(10, 'designations', 'Junior Executive', '', '#a7f4ec', 1, 0, '2021-05-12 00:49:23', '2021-05-12 00:49:23', NULL),
-(11, 'designations', 'Senior Executive', '', '#327770', 1, 0, '2021-05-12 00:49:43', '2021-05-12 00:49:43', NULL),
-(12, 'designations', 'Manager Executive', '', '#007bff', 1, 0, '2021-05-12 00:50:30', '2021-05-12 00:50:30', NULL),
-(13, 'designations', 'Chief Operating Officer', '', '#ae00ff', 1, 0, '2021-05-12 00:50:50', '2021-05-12 00:50:50', NULL),
-(14, 'designations', 'Chief Executive Officer', '', '#ff007b', 1, 0, '2021-05-12 00:51:23', '2021-05-12 00:51:23', NULL);
+(5, 'membership', 'Membership Management', '', '#007a6e', 1, 0, '2021-05-12 00:47:25', '2023-07-26 22:07:11', NULL),
+(6, 'users', 'User Management', '', '#3fc624', 1, 0, '2021-05-12 00:47:48', '2023-07-26 22:08:19', NULL),
+(7, 'report', 'All Report', '', '#7d248f', 1, 0, '2021-05-12 00:48:14', '2023-07-26 22:44:42', NULL),
+(8, 'volunteer', 'Volunteer Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(15, 'roles', 'Volunteer', 'Volunteer', '#ff00f7', 1, 0, '2021-05-12 00:46:51', '2023-07-26 00:50:07', NULL),
+(16, 'inquires', 'Inquiry Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(17, 'team', 'Team Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(18, 'services', 'Services Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(19, 'program', 'Program Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(20, 'settings', 'Settings Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(21, 'department', 'Department Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -136,6 +137,13 @@ CREATE TABLE `departments` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `departments`
+--
+
+INSERT INTO `departments` (`id`, `name`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Department A', 1, 0, '2023-07-26 17:02:50', '2023-07-26 17:04:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -252,6 +260,35 @@ INSERT INTO `main_category` (`id`, `type`, `name`, `slug`, `is_active`, `is_dele
 (18, 2, 'Leggings', 'leggings', 1, 0, '2023-03-23 15:55:34', '2023-03-23 15:55:34', NULL),
 (19, 2, 'Socks', 'socks', 1, 0, '2023-03-23 15:55:38', '2023-03-23 15:55:38', NULL),
 (20, 2, 'Headband', 'headband', 1, 0, '2023-03-23 15:55:41', '2023-03-23 15:55:41', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `membership`
+--
+
+CREATE TABLE `membership` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1:Monthly,2:Yearly',
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `desc` text NOT NULL,
+  `price` varchar(100) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `deleted_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `membership`
+--
+
+INSERT INTO `membership` (`id`, `type`, `title`, `slug`, `desc`, `price`, `is_active`, `is_deleted`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'Package 1', 'package-1', '<p>Description here...</p>', '9.99', 1, 0, 0, '2023-07-26 23:20:45', '2023-07-26 23:54:32', NULL),
+(2, 2, 'Package of the Year', 'package-of-the-year', '<p>Description here...</p>', '19.99', 1, 0, 0, '2023-07-26 23:24:42', '2023-07-26 23:54:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -387,7 +424,57 @@ CREATE TABLE `role_assign` (
 
 INSERT INTO `role_assign` (`id`, `assignee`, `role_id`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'a:4:{i:0;s:7:\"roles_1\";i:1;s:13:\"departments_2\";i:2;s:13:\"departments_4\";i:3;s:14:\"designations_3\";}', 2, 1, 0, '2021-05-11 20:05:21', '2021-05-11 20:05:21', NULL),
-(2, 'a:12:{i:0;s:7:\"roles_1\";i:1;s:7:\"roles_2\";i:2;s:7:\"roles_3\";i:3;s:7:\"roles_4\";i:4;s:13:\"departments_1\";i:5;s:13:\"departments_2\";i:6;s:13:\"departments_3\";i:7;s:13:\"departments_4\";i:8;s:14:\"designations_1\";i:9;s:14:\"designations_2\";i:10;s:14:\"designations_3\";i:11;s:14:\"designations_4\";}', 1, 1, 0, '2021-05-11 20:06:25', '2021-05-11 20:06:25', NULL);
+(2, 'a:24:{i:0;s:7:\"roles_1\";i:1;s:7:\"roles_2\";i:2;s:7:\"roles_3\";i:3;s:7:\"roles_4\";i:4;s:12:\"membership_1\";i:5;s:12:\"membership_2\";i:6;s:12:\"membership_3\";i:7;s:12:\"membership_4\";i:8;s:6:\"team_1\";i:9;s:6:\"team_2\";i:10;s:6:\"team_3\";i:11;s:6:\"team_4\";i:12;s:10:\"services_1\";i:13;s:10:\"services_2\";i:14;s:10:\"services_3\";i:15;s:10:\"services_4\";i:16;s:9:\"program_1\";i:17;s:9:\"program_2\";i:18;s:9:\"program_3\";i:19;s:9:\"program_4\";i:20;s:12:\"department_1\";i:21;s:12:\"department_2\";i:22;s:12:\"department_3\";i:23;s:12:\"department_4\";}', 1, 1, 0, '2021-05-11 20:06:25', '2023-07-26 19:08:54', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `title`, `details`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Stability', '<p class=\"text-light p-1\">Healing starts when you find a place where the world isn’t falling apart around you.</p>', 1, 0, '2023-07-25 23:08:27', '2023-07-25 18:12:50', NULL),
+(2, 'Support', '<p class=\"text-light p-1\">We all know what it’s like to be down and out, and we’re here to help others up.</p>', 1, 0, '2023-07-25 23:08:56', '2023-07-25 18:13:01', NULL),
+(3, 'Resources', '<p class=\"text-light p-1\">Help and information can be invaluable to those who don’t take it for granted.</p>', 1, 0, '2023-07-25 23:09:14', '2023-07-25 18:15:28', NULL),
+(4, 'Independence', '<p class=\"text-light p-1\">This is a setting where people in healing can take control of their fate and goals.</p>', 1, 0, '2023-07-25 23:09:32', '2023-07-25 18:15:38', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `logo_path` varchar(255) NOT NULL,
+  `fav_icon` varchar(255) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `company_email` varchar(255) NOT NULL,
+  `company_phone` varchar(255) NOT NULL,
+  `instagram_link` varchar(255) NOT NULL,
+  `facebook_link` varchar(255) NOT NULL,
+  `linkedin_link` varchar(255) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -524,6 +611,12 @@ ALTER TABLE `main_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `membership`
+--
+ALTER TABLE `membership`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -554,6 +647,18 @@ ALTER TABLE `role_assign`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `team`
 --
 ALTER TABLE `team`
@@ -574,7 +679,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -592,7 +697,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `designations`
@@ -619,6 +724,12 @@ ALTER TABLE `main_category`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT for table `membership`
+--
+ALTER TABLE `membership`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -641,6 +752,18 @@ ALTER TABLE `programs`
 --
 ALTER TABLE `role_assign`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `team`

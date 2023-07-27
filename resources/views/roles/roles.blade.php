@@ -4,11 +4,11 @@
 <main>
     <div class="container-fluid site-width">
         <!-- START: Card Data-->
-        <div class="row">
+        <!-- <div class="row">
             <div class="d-inline-flex p-2">
                 <a href="#" class="btn btn-outline-success font-w-600 my-auto text-nowrap ml-auto add-event" data-toggle="modal" data-target="#addevent"><i class="icon-calendar"></i> Add Record</a>
             </div>
-        </div>
+        </div> -->
 
         <!-- Modal -->
         <div id="addevent" class="modal fade" role="dialog">
@@ -116,14 +116,16 @@
                     </div>
                     <div class="modal-footer">
                         <button id="discard" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                        @if(Helper::can_create('roles'))
                         <button id="former-submit" type="button" class="btn btn-primary eventbutton">Save and Update</button>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-        
+         
             @if($attributes)
-                <h3>Roles</h3>
+                <h3>Roles Management</h3>
                 <div class="row">
                 @foreach($attributes as $att)
                     @if($att->attribute == "roles")

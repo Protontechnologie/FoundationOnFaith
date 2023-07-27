@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Helper;
 
 class DepartmentController extends Controller
 {
@@ -14,10 +15,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-
-        // dd()
+        if(!Helper::can_view('department')){
+            return view('error.permission');
+        }
         $departments = Department::latest()->paginate(10);
-  
         return view('departments.index',compact('departments'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }

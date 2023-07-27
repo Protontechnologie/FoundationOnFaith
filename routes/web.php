@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\MembershipController;
 
 
 use App\Http\Controllers\HomeController;
@@ -57,7 +58,7 @@ Route::post('/employee-registration-submit', [RegistrationController::class, 're
 
 Route::group(['middleware' => 'auth'], function()
 {
-    
+    Route::get('dashboard', [HomeController::class , 'user_profile'])->name('dashboard');
     Route::get('dashboard/user-profile', [HomeController::class , 'user_profile'])->name('user_profile');
     Route::get('dashboard/contact-view', [InquiryController::class , 'contact_view'])->name('contact_view');
     Route::get('dashboard/sponsor-view', [InquiryController::class , 'sponsor_view'])->name('sponsor_view');
@@ -87,6 +88,8 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource('team', TeamController::class);
     Route::resource('program', ProgramController::class);
     Route::resource('services', ServiceController::class);
+    Route::resource('membership', MembershipController::class);
+    
     
     Route::resource('departments', DepartmentController::class);
     Route::resource('designations', DesignationController::class);

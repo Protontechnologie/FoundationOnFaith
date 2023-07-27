@@ -17,17 +17,21 @@ if ($role_assign) {
                     <li class="dropdown active"><a href="#"><i class="icon-home mr-1"></i> Dashboard</a>                  
                         <ul>
                             <li class="active"><a href="{{url('/')}}"><i class="icon-rocket"></i> Website</a></li>
-                            @if(Auth::user()->role_id == 1)
-                            {{-- <li><a href="{{route('roles')}}"><i class="icon-layers"></i> Attributes</a></li> --}}
+                            @if(Auth::user()->role_id == 1 || Helper::can_view('roles'))
+                            <li><a href="{{route('roles')}}"><i class="icon-layers"></i> Permissions</a></li> 
                             @endif
                             @if($sidebar_data)
                                 @foreach($sidebar_data as $side)
                                     <!-- <li><a href="{{route('listing',$side)}}" data-actor="{{$side}}"><i class="fa fa-eye"></i> {{ucwords($side)}}</a></li> -->
                                 @endforeach
                             @endif
-                            {{--<li><a href="{{route('user_rights')}}"><i class="icon-grid"></i> Roles Assign</a></li>
+                            {{--
+                            <li><a href="{{route('user_rights')}}"><i class="icon-grid"></i> Roles Assign</a></li>
+                            <li><a href="{{route('designations.index')}}"><i class="fa fa-graduation-cap"></i>Designations</a></li>
+                            --}}
+                            @if(Helper::can_view('department'))
                             <li><a href="{{route('departments.index')}}"><i class="fa fa-university"></i> Departments</a></li>
-                            <li><a href="{{route('designations.index')}}"><i class="fa fa-graduation-cap"></i>Designations</a></li>--}}
+                            @endif
                             {{--
                             <li><a href="index-covid.html"><i class="icon-earphones"></i> COVID</a></li>
                             <li><a href="index-crypto.html"><i class="icon-support"></i> Crypto</a></li>
@@ -36,30 +40,50 @@ if ($role_assign) {
                         </ul> 
                     </li>
 
-                    @if(Auth::user()->role_id == 1)
-                    
+
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Management</a>
                         <ul>
+                            @if(Helper::can_view('team'))
                             <li class="dropdown"><a href="#"><i class="icon-options"></i>Team</a>
                                 <ul class="sub-menu">
+                                    @if(Helper::can_create('team'))
                                     <li><a href="{{route('team.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    @endif
                                     <li><a href="{{route('team.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
-
+                            @endif
+                            @if(Helper::can_view('program'))
                             <li class="dropdown"><a href="#"><i class="icon-options"></i>Program</a>
                                 <ul class="sub-menu">
+                                    @if(Helper::can_create('program'))
                                     <li><a href="{{route('program.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    @endif
                                     <li><a href="{{route('program.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
+                            @endif
+                            @if(Helper::can_view('membership'))
+                            <li class="dropdown"><a href="#"><i class="icon-options"></i>Membership</a>
+                                <ul class="sub-menu">
+                                @if(Helper::can_create('membership'))
+                                    <li><a href="{{route('membership.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                @endif
+                                    <li><a href="{{route('membership.index')}}"><i class="icon-energy"></i> View</a></li>
+                                </ul>
+                            </li>
+                            @endif
                             
+                            @if(Helper::can_view('services'))
                             <li class="dropdown"><a href="#"><i class="icon-options"></i>Services</a>
                                 <ul class="sub-menu">
+                                    @if(Helper::can_create('services'))
                                     <li><a href="{{route('services.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    @endif
                                     <li><a href="{{route('services.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
+                            @endif
 
                             {{--
                             <li class="dropdown"><a href="#"><i class="icon-options"></i>Category</a>
@@ -118,7 +142,7 @@ if ($role_assign) {
                         </ul>
                     </li>
                     --}}  
-                    @endif
+                    
                     {{--
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Layout</a>
                         <ul>
