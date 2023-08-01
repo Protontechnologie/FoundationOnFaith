@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 27, 2023 at 02:09 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1:3306
+-- Generation Time: Aug 02, 2023 at 12:10 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -59,7 +59,10 @@ INSERT INTO `attributes` (`id`, `attribute`, `name`, `role`, `color`, `is_active
 (18, 'services', 'Services Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
 (19, 'program', 'Program Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
 (20, 'settings', 'Settings Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
-(21, 'department', 'Department Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL);
+(21, 'department', 'Department Management', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(22, 'task_assigning', 'Task Assigning', '', '#1e00ff', 1, 0, '2021-05-12 00:48:34', '2023-07-26 22:12:22', NULL),
+(23, 'client_assignment', 'Client Assignment', '', '#7d248f', 1, 0, '2021-05-12 00:48:14', '2023-07-26 22:44:42', NULL),
+(24, 'my_task', 'My Task', 'My Task', '#b3ff00', 1, 0, '2021-05-12 00:46:30', '2023-07-26 00:48:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -89,6 +92,33 @@ INSERT INTO `category` (`id`, `name`, `slug`, `details`, `category_file`, `is_ac
 (2, 'Lifestyle', 'lifestyle', 'Lifestyle', 'uploads/category/a7fb777641082a017a64c3ee6ac1f112/ou6O3EQRerqrAMVifnp2Kzu3nWxbs48eEqRIYQiM.jpg', 1, 0, '2023-03-16 16:21:47', '2023-03-16 16:21:47', NULL),
 (3, 'Accessories', 'accessories', 'Accessories', 'uploads/category/71cb7f156bd6068d89567e0c31ffac5c/oLgVB0E5T5DUXvBBZW7AdAQOmRFhjNYhXovyOQaj.jpg', 1, 0, '2023-03-16 17:12:05', '2023-03-16 17:12:05', NULL),
 (4, 'Fitness', 'fitness', 'Fitness', 'uploads/category/8104df5febe0d52f029f1b0d5014ad5f/KdiVDZVZtGPmbqLxJJRJGkX6F21DrNIPyPGM3YTe.jpg', 1, 0, '2023-03-16 17:12:28', '2023-03-16 17:12:28', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_assign`
+--
+
+CREATE TABLE `client_assign` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `assign_to` int(11) NOT NULL,
+  `assign_from` int(11) NOT NULL,
+  `comments` text DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `client_assign`
+--
+
+INSERT INTO `client_assign` (`id`, `client_id`, `assign_to`, `assign_from`, `comments`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`, `deleted_by`) VALUES
+(1, 5, 4, 1, '<p>Keep updated the client</p>', 1, 0, '2023-08-01 21:51:25', '2023-08-01 21:51:25', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -424,7 +454,7 @@ CREATE TABLE `role_assign` (
 
 INSERT INTO `role_assign` (`id`, `assignee`, `role_id`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'a:4:{i:0;s:7:\"roles_1\";i:1;s:13:\"departments_2\";i:2;s:13:\"departments_4\";i:3;s:14:\"designations_3\";}', 2, 1, 0, '2021-05-11 20:05:21', '2021-05-11 20:05:21', NULL),
-(2, 'a:24:{i:0;s:7:\"roles_1\";i:1;s:7:\"roles_2\";i:2;s:7:\"roles_3\";i:3;s:7:\"roles_4\";i:4;s:12:\"membership_1\";i:5;s:12:\"membership_2\";i:6;s:12:\"membership_3\";i:7;s:12:\"membership_4\";i:8;s:6:\"team_1\";i:9;s:6:\"team_2\";i:10;s:6:\"team_3\";i:11;s:6:\"team_4\";i:12;s:10:\"services_1\";i:13;s:10:\"services_2\";i:14;s:10:\"services_3\";i:15;s:10:\"services_4\";i:16;s:9:\"program_1\";i:17;s:9:\"program_2\";i:18;s:9:\"program_3\";i:19;s:9:\"program_4\";i:20;s:12:\"department_1\";i:21;s:12:\"department_2\";i:22;s:12:\"department_3\";i:23;s:12:\"department_4\";}', 1, 1, 0, '2021-05-11 20:06:25', '2023-07-26 19:08:54', NULL);
+(2, 'a:48:{i:0;s:7:\"roles_1\";i:1;s:7:\"roles_2\";i:2;s:7:\"roles_3\";i:3;s:7:\"roles_4\";i:4;s:12:\"membership_1\";i:5;s:12:\"membership_2\";i:6;s:12:\"membership_3\";i:7;s:12:\"membership_4\";i:8;s:7:\"users_1\";i:9;s:7:\"users_2\";i:10;s:7:\"users_3\";i:11;s:7:\"users_4\";i:12;s:8:\"report_1\";i:13;s:8:\"report_2\";i:14;s:8:\"report_3\";i:15;s:8:\"report_4\";i:16;s:10:\"inquires_1\";i:17;s:10:\"inquires_2\";i:18;s:10:\"inquires_3\";i:19;s:10:\"inquires_4\";i:20;s:6:\"team_1\";i:21;s:6:\"team_2\";i:22;s:6:\"team_3\";i:23;s:6:\"team_4\";i:24;s:10:\"services_1\";i:25;s:10:\"services_2\";i:26;s:10:\"services_3\";i:27;s:10:\"services_4\";i:28;s:9:\"program_1\";i:29;s:9:\"program_2\";i:30;s:9:\"program_3\";i:31;s:9:\"program_4\";i:32;s:10:\"settings_1\";i:33;s:10:\"settings_2\";i:34;s:10:\"settings_3\";i:35;s:10:\"settings_4\";i:36;s:12:\"department_1\";i:37;s:12:\"department_2\";i:38;s:12:\"department_3\";i:39;s:12:\"department_4\";i:40;s:16:\"task_assigning_1\";i:41;s:16:\"task_assigning_2\";i:42;s:16:\"task_assigning_3\";i:43;s:16:\"task_assigning_4\";i:44;s:19:\"client_assignment_1\";i:45;s:19:\"client_assignment_2\";i:46;s:19:\"client_assignment_3\";i:47;s:19:\"client_assignment_4\";}', 1, 1, 0, '2021-05-11 20:06:25', '2023-08-01 16:47:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -479,6 +509,36 @@ CREATE TABLE `settings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `task`
+--
+
+CREATE TABLE `task` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `details` text NOT NULL,
+  `assign_to` int(11) NOT NULL,
+  `assign_from` int(11) NOT NULL,
+  `task_status` int(11) NOT NULL DEFAULT 0 COMMENT '0:Pending,1:Closed,2:Completed',
+  `deadline` datetime NOT NULL,
+  `comments` text DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`id`, `title`, `details`, `assign_to`, `assign_from`, `task_status`, `deadline`, `comments`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`, `deleted_by`) VALUES
+(1, 'Do it on time', '<p>Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time, please</p>', 4, 1, 0, '2023-08-01 00:00:00', NULL, 1, 0, '2023-08-01 21:14:38', '2023-08-01 16:31:18', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `team`
 --
 
@@ -515,36 +575,27 @@ INSERT INTO `team` (`id`, `name`, `designation`, `upload`, `is_active`, `is_dele
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `role_id` int(11) NOT NULL DEFAULT 0,
+  `team_id` int(11) NOT NULL DEFAULT 0,
   `name` varchar(255) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `profile_pic` varchar(255) DEFAULT NULL,
-  `resume_doc` varchar(255) DEFAULT NULL,
-  `cnic_doc` varchar(255) DEFAULT NULL,
-  `education_doc` varchar(255) DEFAULT NULL,
   `personal_email` varchar(255) DEFAULT NULL,
   `phonenumber` varchar(255) DEFAULT NULL,
-  `emergency_number` varchar(255) DEFAULT NULL,
-  `cnic` varchar(255) DEFAULT NULL,
   `residential_address` varchar(255) DEFAULT NULL,
   `blood_group` varchar(255) DEFAULT NULL,
   `dob` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `marital_status` varchar(255) DEFAULT NULL,
-  `emp_id` int(11) NOT NULL,
+  `emp_id` int(11) DEFAULT NULL,
   `designation` varchar(255) DEFAULT NULL,
   `department` varchar(255) DEFAULT NULL,
-  `join_date` date NOT NULL,
-  `reporting_line` varchar(255) DEFAULT NULL,
-  `v_model_name` varchar(255) DEFAULT NULL,
-  `v_model_year` varchar(255) DEFAULT NULL,
-  `v_number_plate` varchar(255) DEFAULT NULL,
-  `bank_account_number` varchar(255) DEFAULT NULL,
+  `join_date` date DEFAULT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT 1,
   `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL
@@ -554,8 +605,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `username`, `email`, `email_verified_at`, `password`, `profile_pic`, `resume_doc`, `cnic_doc`, `education_doc`, `personal_email`, `phonenumber`, `emergency_number`, `cnic`, `residential_address`, `blood_group`, `dob`, `gender`, `marital_status`, `emp_id`, `designation`, `department`, `join_date`, `reporting_line`, `v_model_name`, `v_model_year`, `v_number_plate`, `bank_account_number`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`, `remember_token`) VALUES
-(1, 1, 'Administrator', 'admin', 'admin@project.com', NULL, '$2y$10$tmPeoAmP.ER/7cVW6JvGMOhEtCztu7LiyGde99kwQWO2ot.Ad7tGa', 'uploads/avatar/3393dd54a0cfbc5c1e0f5b7a7ddea30c/gmTKaSExV9V3CQSmaEzsx3fmMcX3LWPigcQp0aLb.png', 'uploads/resume/2339f4445ad239e370e032dbee4d5819/4e9psgcsxImYuXFTRJMdpu9RS7RgL6twLhX6QfCT.png', 'uploads/cnic/b591d9b80583399ce26d62ab98bf47ec/it4PcMBwokHHu43ruRYeNi1benQEdfCCEolbOcLr.png', NULL, 'admin@test.com', '+1XXXXXXXXX', '+1XXXXXXXXX', '00000-0000000-0', 'None', 'B-VE', '1992-06-14', 'male', 'single', 1027, 'Chief Executive Officer', 'Custom Development', '2021-05-01', 'me@mydomain.com', 'Vitz', '2021', '12345', 'None', 1, 0, '2021-05-11 19:44:21', '2023-07-14 09:21:23', NULL, NULL);
+INSERT INTO `users` (`id`, `role_id`, `team_id`, `name`, `username`, `email`, `email_verified_at`, `password`, `profile_pic`, `personal_email`, `phonenumber`, `residential_address`, `blood_group`, `dob`, `gender`, `marital_status`, `emp_id`, `designation`, `department`, `join_date`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`, `remember_token`) VALUES
+(1, 1, 0, 'Administrator', 'admin', 'admin@project.com', NULL, '$2y$10$tmPeoAmP.ER/7cVW6JvGMOhEtCztu7LiyGde99kwQWO2ot.Ad7tGa', 'uploads/avatar/3393dd54a0cfbc5c1e0f5b7a7ddea30c/gmTKaSExV9V3CQSmaEzsx3fmMcX3LWPigcQp0aLb.png', 'admin@test.com', '+1XXXXXXXXX', 'None', 'B-VE', '1992-06-14', 'male', 'single', 1027, 'Chief Executive Officer', 'Custom Development', '2021-05-01', 1, 0, '2021-05-11 19:44:21', '2023-07-14 09:21:23', NULL, NULL),
+(3, 15, 0, 'Volunteer Person', 'volunteer_ad', 'volunteer@gmail.com', NULL, '$2y$10$HMwQ4058vWBVmKslMHxM4uTW35pFn3/uUkGVLO9ZcaPJvH6k5UPAm', 'uploads/user/ff61e1c07547498df902902219947124/K25lxiz3puphWo66RO3it5T0t9gcVhr8vvmPQ4Nn.jpg', NULL, '11111111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, 0, 0, '2023-08-01 14:52:09', '2023-08-01 09:53:09', NULL, NULL),
+(4, 4, 6, 'Employee 1', 'emp_1', 'emp@gmail.com', NULL, '$2y$10$HMwQ4058vWBVmKslMHxM4uTW35pFn3/uUkGVLO9ZcaPJvH6k5UPAm', 'uploads/user/c45dff42869d4e883f526afb0cdfd32b/kDlBbGaBbFvquOzKWfC6ehvvkZdk280BNTkZaQm1.jpg', NULL, '222222222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, 1, 0, '2023-08-01 15:40:21', NULL, NULL, NULL),
+(5, 3, 1, 'Client 1', 'client123', 'client@gmail.com', NULL, '$2y$10$G1/0DzJwgkdGbTFrGiOq7.8qNdPEYeO.Jt8yz4j2a399DCYh2PMZe', 'uploads/user/c9b4a601caea2bdf134074d2e574f525/4W87FiA6Tqd4rlD8uEkssyU3Di4kuCymiWNJ4gfO.jpg', NULL, '123465789896', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, 1, 0, '2023-08-01 21:50:14', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -571,6 +625,12 @@ ALTER TABLE `attributes`
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `client_assign`
+--
+ALTER TABLE `client_assign`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -659,6 +719,12 @@ ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `team`
 --
 ALTER TABLE `team`
@@ -679,13 +745,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `client_assign`
+--
+ALTER TABLE `client_assign`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -766,6 +838,12 @@ ALTER TABLE `settings`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `task`
+--
+ALTER TABLE `task`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
@@ -775,7 +853,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

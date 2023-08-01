@@ -50,7 +50,6 @@
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 
 
-
 @yield('script')
 
 <!-- START: APP JS-->
@@ -85,8 +84,9 @@
   }
   		toastr.success("{{ session('success') }}");
   @endif
-
+  console.log("error")
   @if(Session::has('error'))
+  
   toastr.options =
   {
   	"closeButton" : true,

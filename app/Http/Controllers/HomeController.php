@@ -7,8 +7,11 @@ use Auth;
 use App\Models\User;
 use App\Models\attributes;
 use App\Models\Settings;
+use App\Models\Donation;
 use Illuminate\Support\Str;
 use Session;
+use Carbon\Carbon;
+use DB;
 
 class HomeController extends Controller
 {
@@ -31,6 +34,97 @@ class HomeController extends Controller
     {
         return view('welcome');
     }
+
+    public function dashboard()
+    {
+        $arrays = array();
+        $all_dues = 0;
+        $order = Donation::select('amount')->get()->toArray();
+        foreach($order as $object)
+        {
+            $arrays[] = $object['amount'];
+            $all_dues += $object['amount'];
+        }
+        $total_order_generated = implode(",",$arrays);
+        $total_order_count = count($arrays);
+        $data['total_order_generated'] = $total_order_generated;
+        $data['total_order_count'] = $total_order_count;
+        $data['all_dues'] = $all_dues;
+
+        // Current Day Order
+        $order_today = Donation::select('amount')->whereDate('created_at', Carbon::today())->get()->toArray();
+
+        $today_arrays = array();
+        $today_dues = 0;
+        foreach($order_today as $object)
+        {
+            $today_arrays[] = $object['amount'];
+            $today_dues += $object['amount'];
+        }
+        $today_order_generated = implode(",",$today_arrays);
+        $today_order_count = count($today_arrays);
+        $data['today_order_generated'] = $today_order_generated;
+        $data['today_order_count'] = $today_order_count;
+        $data['today_dues'] = $today_dues;
+
+        // Paid Order
+        $order_paid = Donation::select('amount')->where('is_paid' , 1)->get()->toArray();
+        $arrays_paid = array();
+        $all_paid = 0;
+        foreach($order_paid as $object)
+        {
+            $arrays_paid[] = $object['amount'];
+            $all_paid += $object['amount'];
+        }
+        $total_paid_generated = implode(",",$arrays_paid);
+        $total_paid_count = count($arrays_paid);
+        $data['total_paid_generated'] = $total_paid_generated;
+        $data['total_paid_count'] = $total_paid_count;
+        $data['all_paid'] = $all_paid;
+
+        // Current Day Paid Order
+        $order_today_paid = Donation::select('amount')->where('is_paid' , 1)->whereDate('created_at', Carbon::today())->get()->toArray();
+        $today_paid_arrays = array();
+        $today_paid = 0;
+        foreach($order_today_paid as $object)
+        {
+            $today_paid_arrays[] = $object['sale_amount'];
+            $today_paid += $object['sale_amount'];
+        }
+        $today_paidorder_generated = implode(",",$today_paid_arrays);
+        $today_paidorder_count = count($today_paid_arrays);
+        $data['today_paidorder_generated'] = $today_paidorder_generated;
+        $data['today_paidorder_count'] = $today_paidorder_count;
+        $data['today_paid'] = $today_paid;
+
+        $month_report = Donation::select(
+            DB::raw("(sum(amount)) as total_amount"),
+            DB::raw("MONTHNAME(created_at) as month_name")
+        )
+        ->whereYear('created_at', date('Y'))
+        ->groupBy('month_name')
+        ->where('is_paid' , 1)
+        ->get()
+        ->toArray();
+
+        $months = array();
+        $amounts = array();
+        foreach($month_report as $report){
+            $months[] = '"'.$report['month_name'].'"';
+            $amounts[] = $report['total_amount'];
+        }
+        
+        $months_report_name = implode(',' , $months);
+        
+        $months_report_amount = implode(',' , $amounts);
+        $data['months_report_name'] = $months_report_name;
+        $data['months_report_amount'] = $months_report_amount;
+        
+        $all_users = User::where("id" , "!=" , 1)->get();
+
+        return view('dashboard.index')->with(compact('data','all_users'));
+    }
+
     public function user_profile()
     {
         $user = Auth::user();

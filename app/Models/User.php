@@ -20,6 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phonenumber',
+        'username',
+        'department',
+        'role_id','team_id'
     ];
 
     /**
@@ -53,6 +57,6 @@ class User extends Authenticatable
 
     public function departments()
     {
-        return $this->belongsTo('App\Models\attributes', 'department', 'id');
+        return $this->belongsTo('App\Models\Department', 'department', 'id');
     }
 }

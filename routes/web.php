@@ -7,6 +7,9 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ClientController;
 
 
 use App\Http\Controllers\HomeController;
@@ -58,7 +61,7 @@ Route::post('/employee-registration-submit', [RegistrationController::class, 're
 
 Route::group(['middleware' => 'auth'], function()
 {
-    Route::get('dashboard', [HomeController::class , 'user_profile'])->name('dashboard');
+    Route::get('dashboard', [HomeController::class , 'dashboard'])->name('dashboard');
     Route::get('dashboard/user-profile', [HomeController::class , 'user_profile'])->name('user_profile');
     Route::get('dashboard/contact-view', [InquiryController::class , 'contact_view'])->name('contact_view');
     Route::get('dashboard/sponsor-view', [InquiryController::class , 'sponsor_view'])->name('sponsor_view');
@@ -84,15 +87,26 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('attendance-import-submit', [ReportController::class, 'attendance_import_submit'])->name('attendance_import_submit');
     
     // Reports Routes End
+    Route::group(['prefix'=>'dashboard', 'middleware' => ['auth']], function () {
+        Route::resource('user', UserController::class);
+        Route::resource('team', TeamController::class);
+        Route::resource('program', ProgramController::class);
+        Route::resource('services', ServiceController::class);
+        Route::resource('membership', MembershipController::class);
+        Route::group(['prefix'=>'assign', 'middleware' => ['auth']], function () {
+            Route::resource('task', TaskController::class);
+            Route::resource('client', ClientController::class);
+        });
+        
+        Route::resource('departments', DepartmentController::class);
+        Route::resource('designations', DesignationController::class);
 
-    Route::resource('team', TeamController::class);
-    Route::resource('program', ProgramController::class);
-    Route::resource('services', ServiceController::class);
-    Route::resource('membership', MembershipController::class);
+        Route::post('/check-username-availability', [UserController::class, 'username_availability'])->name('username_availability');
+        Route::post('/change-user-status', [UserController::class, 'change_status'])->name('change_status');
+    });
+
     
-    
-    Route::resource('departments', DepartmentController::class);
-    Route::resource('designations', DesignationController::class);
+
     
     Route::get('/user-rights', [HomeController::class , 'user_rights'])->name('user_rights');
     Route::post('change-password', 'ChangePasswordController@store')->name('change_password');

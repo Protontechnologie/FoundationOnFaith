@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -27,10 +28,15 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = '/dashboard/user-profile';
+    //protected $redirectTo = '/dashboard';
     protected function redirectTo()
     {
-        return '/dashboard/user-profile';
+        if(Auth::user()->is_active == 0){
+            //Auth::logout();
+            return '/login?error=Your account is not approved, wait for the approval from Admin.';
+        }else{
+            return '/dashboard';
+        }
     }
 
     /**

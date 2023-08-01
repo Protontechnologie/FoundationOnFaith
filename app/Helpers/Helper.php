@@ -45,29 +45,39 @@ class Helper
     public static function can_create($slug='')
     {
         $user = Auth::user();
-        $temp = false;
-        $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
-        $verify = unserialize($role_assign->assignee);
-        foreach ($verify as $key => $value) {
-            if ($value == $slug."_1") {
-                $temp = true;
+        if($user->is_active == 1){
+            $temp = false;
+            $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
+            $verify = unserialize($role_assign->assignee);
+            foreach ($verify as $key => $value) {
+                if ($value == $slug."_1") {
+                    $temp = true;
+                }
             }
+            return $temp;
+        }else{
+            return false;
         }
-        return $temp;
     }
 
     public static function can_view($slug='')
     {
         $user = Auth::user();
-        $temp = false;
-        $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
-        $verify = unserialize($role_assign->assignee);
-        foreach ($verify as $key => $value) {
-            if ($value == $slug."_2") {
-                $temp = true;
+        if($user->is_active == 1){
+            $temp = false;
+            $role_assign = role_assign::where('is_active' ,1)->where("role_id" ,$user->role_id)->first();
+            $verify = unserialize($role_assign->assignee);
+            foreach ($verify as $key => $value) {
+                if ($value == $slug."_2") {
+                    $temp = true;
+                }
             }
+            return $temp;
+        }else{
+            return false;
         }
-        return $temp;
+        
+        
     }
 
 

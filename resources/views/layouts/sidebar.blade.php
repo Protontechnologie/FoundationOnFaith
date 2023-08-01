@@ -16,9 +16,10 @@ if ($role_assign) {
                 <ul id="side-menu" class="sidebar-menu">
                     <li class="dropdown active"><a href="#"><i class="icon-home mr-1"></i> Dashboard</a>                  
                         <ul>
-                            <li class="active"><a href="{{url('/')}}"><i class="icon-rocket"></i> Website</a></li>
+                            <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"><a href="{{route('dashboard')}}"><i class="icon-rocket"></i> Dashboard</a></li>
+                            <li ><a href="{{url('/')}}"><i class="icon-rocket"></i> Website</a></li>
                             @if(Auth::user()->role_id == 1 || Helper::can_view('roles'))
-                            <li><a href="{{route('roles')}}"><i class="icon-layers"></i> Permissions</a></li> 
+                            <li class="{{ request()->routeIs('roles') ? 'active' : '' }}"><a href="{{route('roles')}}"><i class="icon-layers"></i> Permissions</a></li> 
                             @endif
                             @if($sidebar_data)
                                 @foreach($sidebar_data as $side)
@@ -30,7 +31,7 @@ if ($role_assign) {
                             <li><a href="{{route('designations.index')}}"><i class="fa fa-graduation-cap"></i>Designations</a></li>
                             --}}
                             @if(Helper::can_view('department'))
-                            <li><a href="{{route('departments.index')}}"><i class="fa fa-university"></i> Departments</a></li>
+                            <li class="{{ request()->routeIs('departments.index') ? 'active' : '' }}"><a href="{{route('departments.index')}}"><i class="fa fa-university"></i> Departments</a></li>
                             @endif
                             {{--
                             <li><a href="index-covid.html"><i class="icon-earphones"></i> COVID</a></li>
@@ -43,44 +44,54 @@ if ($role_assign) {
 
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Management</a>
                         <ul>
+                            @if(Helper::can_view('users'))
+                            <li class="dropdown {{ (request()->routeIs('user.index') || request()->routeIs('user.create')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Users</a>
+                                <ul class="sub-menu">
+                                    @if(Helper::can_create('users'))
+                                    <li class="{{ request()->routeIs('user.create') ? 'active' : '' }}"><a href="{{route('user.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    @endif
+                                    <li class="{{ request()->routeIs('user.index') ? 'active' : '' }}"><a href="{{route('user.index')}}"><i class="icon-energy"></i> View</a></li>
+                                </ul>
+                            </li>
+                            @endif
                             @if(Helper::can_view('team'))
-                            <li class="dropdown"><a href="#"><i class="icon-options"></i>Team</a>
+                            <li class="dropdown {{ (request()->routeIs('team.index') || request()->routeIs('team.create')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Team</a>
                                 <ul class="sub-menu">
                                     @if(Helper::can_create('team'))
-                                    <li><a href="{{route('team.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    <li class="{{ request()->routeIs('team.create') ? 'active' : '' }}"><a href="{{route('team.create')}}"><i class="icon-energy"></i> Create</a></li>
                                     @endif
-                                    <li><a href="{{route('team.index')}}"><i class="icon-energy"></i> View</a></li>
+                                    <li class="{{ request()->routeIs('team.index') ? 'active' : '' }}"><a href="{{route('team.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
                             @endif
                             @if(Helper::can_view('program'))
-                            <li class="dropdown"><a href="#"><i class="icon-options"></i>Program</a>
+                            <li class="dropdown {{ (request()->routeIs('program.index') || request()->routeIs('program.create')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Program</a>
                                 <ul class="sub-menu">
                                     @if(Helper::can_create('program'))
-                                    <li><a href="{{route('program.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    <li class="{{ request()->routeIs('program.create') ? 'active' : '' }}"><a href="{{route('program.create')}}"><i class="icon-energy"></i> Create</a></li>
                                     @endif
-                                    <li><a href="{{route('program.index')}}"><i class="icon-energy"></i> View</a></li>
+                                    <li class="{{ request()->routeIs('program.index') ? 'active' : '' }}"><a href="{{route('program.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
                             @endif
                             @if(Helper::can_view('membership'))
-                            <li class="dropdown"><a href="#"><i class="icon-options"></i>Membership</a>
+                            <li class="dropdown {{ (request()->routeIs('membership.index') || request()->routeIs('membership.create')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Membership</a>
                                 <ul class="sub-menu">
                                 @if(Helper::can_create('membership'))
-                                    <li><a href="{{route('membership.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    <li class="{{ request()->routeIs('membership.create') ? 'active' : '' }}"><a href="{{route('membership.create')}}"><i class="icon-energy"></i> Create</a></li>
                                 @endif
-                                    <li><a href="{{route('membership.index')}}"><i class="icon-energy"></i> View</a></li>
+                                    <li class="{{ request()->routeIs('membership.index') ? 'active' : '' }}"><a href="{{route('membership.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
                             @endif
                             
                             @if(Helper::can_view('services'))
-                            <li class="dropdown"><a href="#"><i class="icon-options"></i>Services</a>
+                            <li class="dropdown {{ (request()->routeIs('services.index') || request()->routeIs('services.create')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Services</a>
                                 <ul class="sub-menu">
                                     @if(Helper::can_create('services'))
-                                    <li><a href="{{route('services.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                    <li class="{{ request()->routeIs('services.create') ? 'active' : '' }}"><a href="{{route('services.create')}}"><i class="icon-energy"></i> Create</a></li>
                                     @endif
-                                    <li><a href="{{route('services.index')}}"><i class="icon-energy"></i> View</a></li>
+                                    <li class="{{ request()->routeIs('services.index') ? 'active' : '' }}"><a href="{{route('services.index')}}"><i class="icon-energy"></i> View</a></li>
                                 </ul>
                             </li>
                             @endif
@@ -102,20 +113,42 @@ if ($role_assign) {
                             --}}
                         </ul>
                     </li>
-                    
+                    @if(Helper::can_view('inquires'))
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Inquries</a>
                         <ul>
-                            <li><a href="{{route('contact_view')}}"><i class="icon-energy"></i> Contact</a></li>
-                            <li><a href="{{route('sponsor_view')}}"><i class="icon-energy"></i> Sponsor</a></li>
-                            <li><a href="{{route('donation_view')}}"><i class="icon-energy"></i> Donations</a></li>
+                                <li class="{{ request()->routeIs('contact_view') ? 'active' : '' }}"><a href="{{route('contact_view')}}"><i class="icon-energy"></i> Contact</a></li>
+                                <li class="{{ request()->routeIs('sponsor_view') ? 'active' : '' }}"><a href="{{route('sponsor_view')}}"><i class="icon-energy"></i> Sponsor</a></li>
+                                <li class="{{ request()->routeIs('donation_view') ? 'active' : '' }}"><a href="{{route('donation_view')}}"><i class="icon-energy"></i> Donations</a></li>
                         </ul>
                     </li>
+                    @endif
+
+                    <li class="dropdown "><a href="#"><i class="icon-organization mr-1"></i> Assignments</a>
+                        <ul>
+                                <li class="dropdown {{ (request()->routeIs('task.create') || request()->routeIs('task.index')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Task</a>
+                                    <ul class="sub-menu">
+                                        <li class="{{ request()->routeIs('task.create') ? 'active' : '' }}"><a href="{{route('task.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                        <li class="{{ request()->routeIs('task.index') ? 'active' : '' }}"><a href="{{route('task.index')}}"><i class="icon-energy"></i> View</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown {{ (request()->routeIs('client.create') || request()->routeIs('client.index')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Client</a>
+                                    <ul class="sub-menu">
+                                        <li class="{{ request()->routeIs('client.create') ? 'active' : '' }}"><a href="{{route('client.create')}}"><i class="icon-energy"></i> Create</a></li>
+                                        <li class="{{ request()->routeIs('client.index') ? 'active' : '' }}"><a href="{{route('client.index')}}"><i class="icon-energy"></i> View</a></li>
+                                    </ul>
+                                </li>
+                        </ul>
+                    </li>
+
+                    @if(Helper::can_view('settings'))
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Tools</a>
                         <ul>
-                            <li><a href="{{route('website.setting')}}"><i class="icon-options"></i>Settings</a> 
+                            <li class="{{ request()->routeIs('website.setting') ? 'active' : '' }}"><a href="{{route('website.setting')}}"><i class="icon-options"></i>Settings</a> 
                             </li> 
                         </ul>
                     </li>
+                    @endif
                     {{--
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Tools</a>
                         <ul>

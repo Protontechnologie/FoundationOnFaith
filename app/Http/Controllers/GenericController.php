@@ -87,7 +87,7 @@ class GenericController extends Controller
                 $checker = [];
             }
             foreach($att_tag as $key => $role){
-                $body .= "<tr><td>".ucwords($role->attribute)."</td><td><div class='custom-control custom-checkbox'>
+                $body .= "<tr><td>".ucwords(str_replace('_',' ',$role->attribute))."</td><td><div class='custom-control custom-checkbox'>
                                   <input type='checkbox' name='assignee[]' class='custom-control-input' id='customCheck1".$key."' ";
                                    if(in_array($role->attribute."_1", $checker)){ $body .= "checked"; }
                                     $body .= " value='".$role->attribute."_1'>
