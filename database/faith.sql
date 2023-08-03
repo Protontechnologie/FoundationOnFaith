@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 02, 2023 at 12:10 AM
+-- Generation Time: Aug 03, 2023 at 11:23 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -173,7 +173,9 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `name`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Department A', 1, 0, '2023-07-26 17:02:50', '2023-07-26 17:04:05', NULL);
+(1, 'Department A', 1, 0, '2023-07-26 17:02:50', '2023-07-26 17:04:05', NULL),
+(2, 'QA Department', 1, 0, '2023-08-03 15:52:47', '2023-08-03 15:52:47', NULL),
+(3, 'QA Department', 1, 0, '2023-08-03 15:53:27', '2023-08-03 15:53:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -348,6 +350,34 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `assign_to` int(11) NOT NULL DEFAULT 1,
+  `is_seen` int(11) NOT NULL DEFAULT 0,
+  `msg` varchar(255) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `type`, `assign_to`, `is_seen`, `msg`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'Create', 1, 0, 'Department created', 1, 0, '2023-08-03 15:53:27', '2023-08-03 15:53:27', NULL),
+(2, 1, 'View', 1, 0, 'Sponsor Inquiry viewed by Administrator', 1, 0, '2023-08-03 16:07:22', '2023-08-03 16:07:22', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -421,7 +451,7 @@ CREATE TABLE `programs` (
 --
 
 INSERT INTO `programs` (`id`, `title`, `desc`, `upload`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'How does it work?', '<p class=\"text-dark\">\r\n                    When you contact us, we’ll schedule an interview with you to understand your goals and identify your needs. We know you need assistance now, so we’ll move as quickly as possible. After the interview, we’ll arrange a safe\r\n                    and comfortable housing solution. Then you’ll meet with the team to develop a two or four-year plan. The team consists of a:\r\n                </p>\r\n                <p class=\"text-primary\">\r\n                    Paralegal or Attorney<br>\r\n                    Program coordinator<br>\r\n                    Financial Consultant<br>\r\n                    Life Coach<br>\r\n                    Therapist\r\n                </p>', 'uploads/program/96a9e87ba7512f0e06e5408795620297/6L1aEhNlShZyNltOchsin9yrGOyGHhcjsHAs2sVH.jpg', 1, 0, '2023-07-21 15:43:43', '2023-07-21 15:43:43', NULL),
+(1, 'How does it work?', '<p >\n                    When you contact us, we’ll schedule an interview with you to understand your goals and identify your needs. We know you need assistance now, so we’ll move as quickly as possible. After the interview, we’ll arrange a safe\n                    and comfortable housing solution. Then you’ll meet with the team to develop a two or four-year plan. The team consists of a:\n                </p>\n                <h6>\n                    Paralegal or Attorney<br>\n                    Program coordinator<br>\n                    Financial Consultant<br>\n                    Life Coach<br>\n                    Therapist\n                </h6>', 'uploads/program/96a9e87ba7512f0e06e5408795620297/6L1aEhNlShZyNltOchsin9yrGOyGHhcjsHAs2sVH.jpg', 1, 0, '2023-07-21 15:43:43', '2023-08-03 21:14:10', NULL),
 (2, 'What housing is available?', '<p class=\"text-light\">\r\n                    What housing is available? Individual minors will have a shared apartment with their own bedroom. Families will have their own private apartment. All housing is free for one to two years, after which the participant will\r\n                    be responsible for 50% of the market rent. Housing audits are performed every six months by property maintenance. Leases are 12 months and renew only if the participant is active in the program.\r\n                </p>', 'uploads/program/8d930ad9c7b8af6054025a47a5899524/5CVmg23w0I0pOoCZMpSCtgVapf1oTf9PO7D7CAXs.jpg', 1, 0, '2023-07-21 19:13:28', '2023-07-21 14:21:35', NULL),
 (3, 'Career Building', '<p class=\"text-dark\">\r\n                    Career Building There’s no one-size solution that works for everyone’s future. Founding on Faith offers a flexible career support system that allows for the achievement of all sorts of dreams. After the interview, we’ll\r\n                    arrange a safe and comfortable housing solution. Then you’ll meet with the team to develop a two or four-year plan.\r\n                </p>', 'uploads/program/d47ffd19fbfb68a870bb9401a11bb11d/t4HhxdXncYjX9ld21eemKjADCMsRateFcVMvkMdU.jpg', 1, 0, '2023-07-21 19:13:56', '2023-07-21 14:22:04', NULL),
 (4, 'Life coaching', '<p class=\"text-light\">\r\n                    Participants aged 14 and older will meet with a life coach once a month. Your life coach will help clarify your goals and path to success. They’ll help you gain perspective on your challenges, offer objective advice, and\r\n                    teach you tools for dealing with ongoing stressors.\r\n                </p>', 'uploads/program/7f36ad534b3c8442897f42f6f4663f19/rsSEbZTvc8RwyzTFzYGJwOhX6cvDB0APSl9QeuN0.jpg', 1, 0, '2023-07-21 19:14:20', '2023-07-21 14:22:17', NULL),
@@ -454,7 +484,7 @@ CREATE TABLE `role_assign` (
 
 INSERT INTO `role_assign` (`id`, `assignee`, `role_id`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'a:4:{i:0;s:7:\"roles_1\";i:1;s:13:\"departments_2\";i:2;s:13:\"departments_4\";i:3;s:14:\"designations_3\";}', 2, 1, 0, '2021-05-11 20:05:21', '2021-05-11 20:05:21', NULL),
-(2, 'a:48:{i:0;s:7:\"roles_1\";i:1;s:7:\"roles_2\";i:2;s:7:\"roles_3\";i:3;s:7:\"roles_4\";i:4;s:12:\"membership_1\";i:5;s:12:\"membership_2\";i:6;s:12:\"membership_3\";i:7;s:12:\"membership_4\";i:8;s:7:\"users_1\";i:9;s:7:\"users_2\";i:10;s:7:\"users_3\";i:11;s:7:\"users_4\";i:12;s:8:\"report_1\";i:13;s:8:\"report_2\";i:14;s:8:\"report_3\";i:15;s:8:\"report_4\";i:16;s:10:\"inquires_1\";i:17;s:10:\"inquires_2\";i:18;s:10:\"inquires_3\";i:19;s:10:\"inquires_4\";i:20;s:6:\"team_1\";i:21;s:6:\"team_2\";i:22;s:6:\"team_3\";i:23;s:6:\"team_4\";i:24;s:10:\"services_1\";i:25;s:10:\"services_2\";i:26;s:10:\"services_3\";i:27;s:10:\"services_4\";i:28;s:9:\"program_1\";i:29;s:9:\"program_2\";i:30;s:9:\"program_3\";i:31;s:9:\"program_4\";i:32;s:10:\"settings_1\";i:33;s:10:\"settings_2\";i:34;s:10:\"settings_3\";i:35;s:10:\"settings_4\";i:36;s:12:\"department_1\";i:37;s:12:\"department_2\";i:38;s:12:\"department_3\";i:39;s:12:\"department_4\";i:40;s:16:\"task_assigning_1\";i:41;s:16:\"task_assigning_2\";i:42;s:16:\"task_assigning_3\";i:43;s:16:\"task_assigning_4\";i:44;s:19:\"client_assignment_1\";i:45;s:19:\"client_assignment_2\";i:46;s:19:\"client_assignment_3\";i:47;s:19:\"client_assignment_4\";}', 1, 1, 0, '2021-05-11 20:06:25', '2023-08-01 16:47:42', NULL);
+(2, 'a:49:{i:0;s:7:\"roles_1\";i:1;s:7:\"roles_2\";i:2;s:7:\"roles_3\";i:3;s:7:\"roles_4\";i:4;s:12:\"membership_1\";i:5;s:12:\"membership_2\";i:6;s:12:\"membership_3\";i:7;s:12:\"membership_4\";i:8;s:7:\"users_2\";i:9;s:8:\"report_1\";i:10;s:8:\"report_2\";i:11;s:8:\"report_3\";i:12;s:8:\"report_4\";i:13;s:10:\"inquires_1\";i:14;s:10:\"inquires_2\";i:15;s:10:\"inquires_3\";i:16;s:10:\"inquires_4\";i:17;s:6:\"team_1\";i:18;s:6:\"team_2\";i:19;s:6:\"team_3\";i:20;s:6:\"team_4\";i:21;s:10:\"services_1\";i:22;s:10:\"services_2\";i:23;s:10:\"services_3\";i:24;s:10:\"services_4\";i:25;s:9:\"program_1\";i:26;s:9:\"program_2\";i:27;s:9:\"program_3\";i:28;s:9:\"program_4\";i:29;s:10:\"settings_1\";i:30;s:10:\"settings_2\";i:31;s:10:\"settings_3\";i:32;s:10:\"settings_4\";i:33;s:12:\"department_1\";i:34;s:12:\"department_2\";i:35;s:12:\"department_3\";i:36;s:12:\"department_4\";i:37;s:16:\"task_assigning_1\";i:38;s:16:\"task_assigning_2\";i:39;s:16:\"task_assigning_3\";i:40;s:16:\"task_assigning_4\";i:41;s:19:\"client_assignment_1\";i:42;s:19:\"client_assignment_2\";i:43;s:19:\"client_assignment_3\";i:44;s:19:\"client_assignment_4\";i:45;s:9:\"my_task_1\";i:46;s:9:\"my_task_2\";i:47;s:9:\"my_task_3\";i:48;s:9:\"my_task_4\";}', 1, 1, 0, '2021-05-11 20:06:25', '2023-08-02 16:34:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -534,7 +564,8 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `title`, `details`, `assign_to`, `assign_from`, `task_status`, `deadline`, `comments`, `is_active`, `is_deleted`, `created_at`, `updated_at`, `deleted_at`, `deleted_by`) VALUES
-(1, 'Do it on time', '<p>Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time, please</p>', 4, 1, 0, '2023-08-01 00:00:00', NULL, 1, 0, '2023-08-01 21:14:38', '2023-08-01 16:31:18', NULL, NULL);
+(1, 'Do it on time', '<p>Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time, please</p>', 4, 1, 0, '2023-08-01 00:00:00', NULL, 1, 0, '2023-08-01 21:14:38', '2023-08-01 16:31:18', NULL, NULL),
+(2, 'Do it on time', '<p>Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time&nbsp;Do it on time, please</p>', 1, 3, 2, '2023-08-01 00:00:00', 'Task is Completed', 1, 0, '2023-08-01 21:14:38', '2023-08-02 15:56:37', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -683,6 +714,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -769,7 +806,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `designations`
@@ -808,6 +845,12 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -841,7 +884,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `team`
