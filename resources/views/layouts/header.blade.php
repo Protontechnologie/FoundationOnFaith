@@ -74,7 +74,7 @@
                                 </ul>
 
                             </li>
-                           
+                            --}}
                             <li class="dropdown align-self-center d-inline-block">
                                 <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false"><i class="icon-bell h4"></i>
                                     <span class="badge badge-default"> <span class="ring">
@@ -82,44 +82,15 @@
                                         </span> </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right border   py-0">
-                                    <li>
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="{{asset('images/author.jpg')}}" alt="" class="d-flex mr-3 img-fluid rounded-circle w-50">
-                                                <div class="media-body">
-                                                    <p class="mb-0 text-success">john send a message</p>
-                                                    12 min ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li >
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="{{asset('images/author2.jpg')}}" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0 text-danger">Peter send a message</p>
-                                                    15 min ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li >
-                                        <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
-                                            <div class="media">
-                                                <img src="{{asset('images/author3.jpg')}}" alt="" class="d-flex mr-3 img-fluid rounded-circle">
-                                                <div class="media-body">
-                                                    <p class="mb-0 text-warning">Bill send a message</p>
-                                                    5 min ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                    
+                                    {!! Helper::generate_notification() !!}
 
-                                    <li><a class="dropdown-item text-center py-2" href="#"> Read All Message <i class="icon-arrow-right pl-2 small"></i></a></li>
+                                    
+
+                                    {{-- <li><a class="dropdown-item text-center py-2" href="#"> Read All Message <i class="icon-arrow-right pl-2 small"></i></a></li> --}}
                                 </ul>
                             </li>
-                             --}}
+                            
                             <li class="dropdown user-profile align-self-center d-inline-block">
                                 <a href="#" class="nav-link py-0" data-toggle="dropdown" aria-expanded="false"> 
                                     <div class="media">

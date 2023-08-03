@@ -47,6 +47,7 @@ class DepartmentController extends Controller
         ]);
   
         Department::create($request->all());
+        Helper::create_notification("Create" , "1" , "Department created by ".Auth::user()->name);
    
         return redirect()->route('departments.index')
                         ->with('success','department created successfully.');
@@ -89,6 +90,7 @@ class DepartmentController extends Controller
         ]);
   
         $department->update($request->all());
+        Helper::create_notification("Update" , "1" , "Department updated by ".Auth::user()->name);
   
         return redirect()->route('departments.index')
                         ->with('success','department updated successfully');
@@ -103,6 +105,7 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         $department->delete();
+        Helper::create_notification("Delete" , "1" , "Department deleted by ".Auth::user()->name);
   
         return redirect()->route('departments.index')
                         ->with('success','department deleted successfully');

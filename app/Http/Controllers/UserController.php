@@ -57,6 +57,7 @@ class UserController extends Controller
         
         try{
             User::insert($post_feilds);
+            Helper::create_notification("Create" , '1' , "User created by ".Auth::user()->name);
             return redirect()->route('user.index')
                         ->with('success','User created successfully');
         }
@@ -115,6 +116,7 @@ class UserController extends Controller
 
         try {
             $user->update($post_feilds);
+            Helper::create_notification("Updated" , '1' , "User updated by ".Auth::user()->name);
             return redirect()->route('user.index')
                         ->with('success','User updated successfully');
         } catch (ValidationException $e) {
@@ -134,6 +136,8 @@ class UserController extends Controller
         $user->is_deleted = 1;
         $user->deleted_by = Auth::user()->id;
         $user->save();
+
+        Helper::create_notification("Delete" , '1' , "User deleted by ".Auth::user()->name);
 
         return redirect()->route('user.index')
                         ->with('success','User deleted successfully');
@@ -177,6 +181,8 @@ class UserController extends Controller
         $user = User::where('id', $user_id)->first();
         $user->is_active =  $status;
         $user->save();
+        Helper::create_notification("User Status" , '1' , "User status updated by ".Auth::user()->name);
+
         if($status == 1){
             return response()->json(['stat' => 'active']);
         }else{

@@ -47,6 +47,7 @@ class ProgramController extends Controller
         
         try{
             Programs::insert($post_feilds);
+            Helper::create_notification("Create" , "1" , "Program created by ".Auth::user()->name);
             return redirect()->route('program.index')
                         ->with('success','Program created successfully');
         }
@@ -108,6 +109,7 @@ class ProgramController extends Controller
         $program = Programs::where('is_active' , 1)->where('is_deleted' , 0)->where('id' , $id)->first();
 
         try {
+            Helper::create_notification("Update" , "1" , "Program updated by ".Auth::user()->name);
             $program->update($post_feilds);
             return redirect()->route('program.index')
                         ->with('success','Program updated successfully');
@@ -127,7 +129,7 @@ class ProgramController extends Controller
     public function destroy(Programs $program)
     {
         $program->delete();
-  
+        Helper::create_notification("Delete" , "1" , "Program deleted by ".Auth::user()->name);
         return redirect()->route('program.index')
                         ->with('success','Program deleted successfully');
     }

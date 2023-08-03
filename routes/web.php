@@ -97,6 +97,8 @@ Route::group(['middleware' => 'auth'], function()
             Route::resource('task', TaskController::class);
             Route::resource('client', ClientController::class);
         });
+        Route::get('/my-task', [TaskController::class , 'my_task'])->name('dashboard.my_task');
+        Route::post('/change-my-task-status', [TaskController::class, 'update_mytask'])->name('update_mytask');
         
         Route::resource('departments', DepartmentController::class);
         Route::resource('designations', DesignationController::class);

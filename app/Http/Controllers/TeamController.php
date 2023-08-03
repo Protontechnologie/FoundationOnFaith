@@ -47,6 +47,7 @@ class TeamController extends Controller
         
         try{
             Team::insert($post_feilds);
+            Helper::create_notification("Create" , '1' , "Team created by ".Auth::user()->name);
             return redirect()->route('team.index')
                         ->with('success','Team created successfully');
         }
@@ -109,6 +110,7 @@ class TeamController extends Controller
 
         try {
             $team->update($post_feilds);
+            Helper::create_notification("Update" , '1' , "Team updated by ".Auth::user()->name);
             return redirect()->route('team.index')
                         ->with('success','Team updated successfully');
         } catch (ValidationException $e) {
@@ -127,7 +129,7 @@ class TeamController extends Controller
     public function destroy(team $team)
     {
         $team->delete();
-  
+        Helper::create_notification("Delete" , '1' , "Team deleted by ".Auth::user()->name);
         return redirect()->route('team.index')
                         ->with('success','Team deleted successfully');
     }

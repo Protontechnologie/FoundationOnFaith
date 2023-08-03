@@ -10,6 +10,7 @@ use App\Models\Donation;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
 use Stripe\Stripe;
+use Helper;
 
 class InquiryController extends Controller
 {
@@ -19,6 +20,7 @@ class InquiryController extends Controller
             return redirect('/')->with('error', 'Kindly login to review this form');
         }
         $contacts = Contact::where('type' ,1)->where('is_deleted' ,0)->get();
+        Helper::create_notification("View" , "1" , "Contact Inquiry viewed by ".Auth::user()->name);
 
         return view('inquiry.contact_all')->with('title',"Contact Inquiry")->with(compact('contacts'));
     }
@@ -29,6 +31,7 @@ class InquiryController extends Controller
             return redirect('/')->with('error', 'Kindly login to review this form');
         }
         $contacts = Contact::where('type' ,2)->where('is_deleted' ,0)->get();
+        Helper::create_notification("View" , "1" , "Sponsor Inquiry viewed by ".Auth::user()->name);
 
         return view('inquiry.sponsor_all')->with('title',"Sponsor Inquiry")->with(compact('contacts'));
     }
@@ -39,6 +42,7 @@ class InquiryController extends Controller
             return redirect('/')->with('error', 'Kindly login to review this form');
         }
         $donations = Donation::where('is_deleted' ,0)->get();
+        Helper::create_notification("View" , "1" , "Donation Inquiry viewed by ".Auth::user()->name);
 
         return view('inquiry.donation_all')->with('title',"Donations")->with(compact('donations'));
     }

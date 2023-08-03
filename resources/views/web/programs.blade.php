@@ -12,13 +12,20 @@
     </div>
 </div>
 @if($programs)
+@php 
+$colors = ['programs-section-2', 'programs-section-3', 'programs-section-4'];
+@endphp
+
 @foreach($programs as $key => $program)
+@php 
+$color = $colors[$key % count($colors)];
+@endphp
 @if($key % 2 == 0)
 <div class="container-fluid p-5">
-    <div class="container bg-warning p-5">
+    <div class="container {{$color}}">
         <div class="row">
             <div class="col-md-6 d-flex justify-content-center flex-column">
-                <h1 class="text-primary pt-4 pb-4">{{$program->title}}</h1>
+                <h1>{{$program->title}}</h1>
                 {!! $program->desc !!}
             </div>
 
@@ -30,7 +37,7 @@
 </div>
 @else
 <div class="container-fluid p-5">
-    <div class="container bg-primary p-5">
+    <div class="container {{$color}}">
         <div class="row">
             <div class="col-md-5">
                 <img class="w-100" src="{{asset($program->upload)}}" alt="{{$program->title}} | {{env('APP_NAME')}}" />

@@ -34,6 +34,7 @@ class MembershipController extends Controller
         
         try{
             Membership::insert($post_feilds);
+            Helper::create_notification("Create" , "1" , "Membership created by ".Auth::user()->name);
             return redirect()->route('membership.index')
                         ->with('success','Membership created successfully');
         }
@@ -56,7 +57,7 @@ class MembershipController extends Controller
             return view('error.permission');
         }
         $membership = Membership::where('is_active' , 1)->where('is_deleted' , 0)->where('id' , $id)->first();
-        if($membership){
+        if($membership){            
             return view('membership.edit',compact('membership'));
         }else{
             return redirect()->back()->with('error', "No record Exist");
@@ -71,6 +72,7 @@ class MembershipController extends Controller
         $membership = Membership::where('is_active' , 1)->where('is_deleted' , 0)->where('id' , $id)->first();
 
         try {
+            Helper::create_notification("Update" , "1" , "Membership updated by ".Auth::user()->name);
             $membership->update($post_feilds);
             return redirect()->route('membership.index')
                         ->with('success','Membership updated successfully');
@@ -91,6 +93,7 @@ class MembershipController extends Controller
         $membership->is_deleted = 1;
         $membership->deleted_by = Auth::user()->id;
         $membership->save();
+        Helper::create_notification("Delete" , "1" , "Membership deleted by ".Auth::user()->name);
         return redirect()->route('membership.index')
                         ->with('success','Membership deleted successfully');
     }

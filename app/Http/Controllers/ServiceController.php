@@ -42,6 +42,7 @@ class ServiceController extends Controller
         
         try{
             Services::insert($post_feilds);
+            Helper::create_notification("Create" , "1" , "Services created by ".Auth::user()->name);
             return redirect()->route('services.index')
                         ->with('success','Services created successfully');
         }
@@ -82,6 +83,7 @@ class ServiceController extends Controller
         try {
 
             $service->update($post_feilds);
+            Helper::create_notification("Update" , "1" , "Services updated by ".Auth::user()->name);
             return redirect()->route('services.index')->with('success','Service updated successfully');
 
         } catch (ValidationException $e) {
@@ -98,7 +100,7 @@ class ServiceController extends Controller
     public function destroy(Services $service)
     {
         $service->delete();
-  
+        Helper::create_notification("Delete" , "1" , "Services deleted by ".Auth::user()->name);
         return redirect()->route('services.index')
                         ->with('success','Service deleted successfully');
     }

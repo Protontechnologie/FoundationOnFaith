@@ -3,6 +3,8 @@
 namespace App\Helpers;
 use Auth;
 use App\Models\role_assign;
+use App\Models\Notifications;
+use Illuminate\Http\Request;
 
 class Helper
 {
@@ -108,5 +110,57 @@ class Helper
         }
         return $temp;
     }
+
+    public static function create_notification($type , $assign_to, $msg)
+    {
+        $user = Auth::user();
+        $notification = new Notifications;
+        $notification->user_id = $user->id;
+        $notification->type = $type;
+        $notification->assign_to = $assign_to;
+        $notification->msg = $msg;
+        $notification->save();
+        return true;
+    }
+
+    public static function generate_notification()
+    {
+        $user = Auth::user();
+        if($user->role_id == 1){
+            $notifications = Notifications::where('is_active' ,1)->orderBy('id', 'desc')->get();
+        }else{
+            $notifications = Notifications::where('is_active' ,1)->where("assign_to" ,$user->id)->get();
+        }
+        $body = '';
+        if(count($notifications) > 0){
+            foreach($notifications as $notification){
+                $createdAt = $notification->created_at;
+                $humanReadableTime = $createdAt->diffForHumans();
+                $body .= '<li>
+                    <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
+                        <div class="media">
+                            <img src="'.asset($notification->notify_to->profile_pic).'" alt="'.$notification->notify_to->name.'" class="d-flex mr-3 img-fluid rounded-circle">
+                            <div class="media-body">
+                                <p class="mb-0 text-warning">'.$notification->msg.'</p>
+                                '.$humanReadableTime.'
+                            </div>
+                        </div>
+                    </a>
+                </li>';
+            }
+        }else{
+            $body = '<li>
+                    <a class="dropdown-item px-2 py-2 border border-top-0 border-left-0 border-right-0" href="#">
+                        <div class="media">
+                            <div class="media-body">
+                                <p class="mb-0 text-success">Hurray, No more Notification</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>';
+        }
+        return $body;
+    }
+
 
 }

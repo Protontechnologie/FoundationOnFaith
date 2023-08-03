@@ -88,8 +88,8 @@ class HomeController extends Controller
         $today_paid = 0;
         foreach($order_today_paid as $object)
         {
-            $today_paid_arrays[] = $object['sale_amount'];
-            $today_paid += $object['sale_amount'];
+            $today_paid_arrays[] = $object['amount'];
+            $today_paid += $object['amount'];
         }
         $today_paidorder_generated = implode(",",$today_paid_arrays);
         $today_paidorder_count = count($today_paid_arrays);

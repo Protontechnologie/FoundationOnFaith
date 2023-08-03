@@ -31,7 +31,7 @@ class Task extends Model
         }elseif($task_status == "1"){
             return ['type' => 'Closed' , 'alert' => 'warning'];
         }elseif($task_status == "2"){
-            return ['type' => 'Pending' , 'alert' => 'success'];
+            return ['type' => 'Completed' , 'alert' => 'success'];
         }
     }
     

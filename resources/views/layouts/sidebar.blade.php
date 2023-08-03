@@ -125,10 +125,13 @@ if ($role_assign) {
 
                     <li class="dropdown "><a href="#"><i class="icon-organization mr-1"></i> Assignments</a>
                         <ul>
-                                <li class="dropdown {{ (request()->routeIs('task.create') || request()->routeIs('task.index')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Task</a>
+                                <li class="dropdown {{ (request()->routeIs('task.create') || request()->routeIs('task.index') || request()->routeIs('dashboard.my_task')) ? 'active' : '' }}"><a href="#"><i class="icon-options"></i>Task</a>
                                     <ul class="sub-menu">
                                         <li class="{{ request()->routeIs('task.create') ? 'active' : '' }}"><a href="{{route('task.create')}}"><i class="icon-energy"></i> Create</a></li>
                                         <li class="{{ request()->routeIs('task.index') ? 'active' : '' }}"><a href="{{route('task.index')}}"><i class="icon-energy"></i> View</a></li>
+                                        @if(Helper::can_view('my_task'))
+                                        <li class="{{ request()->routeIs('dashboard.my_task') ? 'active' : '' }}"><a href="{{route('dashboard.my_task')}}"><i class="icon-energy"></i> My Task</a></li>
+                                        @endif
                                     </ul>
                                 </li>
 
@@ -141,6 +144,7 @@ if ($role_assign) {
                         </ul>
                     </li>
 
+                    
                     @if(Helper::can_view('settings'))
                     <li class="dropdown"><a href="#"><i class="icon-organization mr-1"></i> Tools</a>
                         <ul>

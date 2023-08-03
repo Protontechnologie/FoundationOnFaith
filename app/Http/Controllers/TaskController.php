@@ -39,6 +39,7 @@ class TaskController extends Controller
         
         try{
             Task::insert($post_feilds);
+            Helper::create_notification("Create" , $_POST['assign_to'] , "Task created by ".Auth::user()->name);
             return redirect()->route('task.index')
                         ->with('success','Task created successfully');
         }
@@ -83,6 +84,7 @@ class TaskController extends Controller
 
         try {
             $task->update($post_feilds);
+            Helper::create_notification("Updated" , $task->assign_to , "Task updated by ".Auth::user()->name);
             return redirect()->route('task.index')
                         ->with('success','Task updated successfully');
         } catch (ValidationException $e) {
@@ -102,8 +104,34 @@ class TaskController extends Controller
         $task->is_deleted = 1;
         $task->deleted_by = Auth::user()->id;
         $task->save();
-
+        Helper::create_notification("Delete" , '1' , "Task deleted by ".Auth::user()->name);
         return redirect()->route('task.index')
                         ->with('success','Task deleted successfully');
     }
+
+    public function my_task(){
+        if(!Helper::can_view('my_task')){
+            return view('error.permission');
+        }
+        $login_user = Auth::user();
+        $tasks = Task::where('assign_to' , $login_user->id)->get();
+        return view('task.my_task',compact('tasks','login_user'));
+    }
+
+    public function update_mytask(Request $request)
+    {
+        if(!Helper::can_edit('my_task')){
+            return view('error.permission');
+        }
+        $id = $request->request_id;
+        $task = Task::where('id' , $id)->first();
+        $task->task_status = $request->task_status;
+        $task->comments = $request->comments;
+        $task->save();
+        Helper::create_notification("Task Comments" , $task->assign_from , "Add task comments by ".Auth::user()->name);
+
+        return redirect()->route('dashboard.my_task')
+                        ->with('success','Task comment added successfully');
+    }
+
 }
